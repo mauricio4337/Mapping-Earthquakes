@@ -5,30 +5,30 @@ console.log("working");
 // setView --> Center:[lat,lng], zoomLevel
 let map = L.map('mapid').setView([30, 30], 2);
 
-// Add GeoJSON data.
-let sanFranAirport =
-{"type":"FeatureCollection","features":[{
-    "type":"Feature",
-    "properties":{
-        "id":"3469",
-        "name":"San Francisco International Airport",
-        "city":"San Francisco",
-        "country":"United States",
-        "faa":"SFO",
-        "icao":"KSFO",
-        "alt":"13",
-        "tz-offset":"-8",
-        "dst":"A",
-        "tz":"America/Los_Angeles"},
-        "geometry":{
-            "type":"Point",
-            "coordinates":[-122.375,37.61899948120117]}}
-]};
+// // Add GeoJSON data.
+// let sanFranAirport =
+// {"type":"FeatureCollection","features":[{
+//     "type":"Feature",
+//     "properties":{
+//         "id":"3469",
+//         "name":"San Francisco International Airport",
+//         "city":"San Francisco",
+//         "country":"United States",
+//         "faa":"SFO",
+//         "icao":"KSFO",
+//         "alt":"13",
+//         "tz-offset":"-8",
+//         "dst":"A",
+//         "tz":"America/Los_Angeles"},
+//         "geometry":{
+//             "type":"Point",
+//             "coordinates":[-122.375,37.61899948120117]}}
+// ]};
 
 // // Grabbing our GeoJSON data.
 // L.geoJSON(sanFranAirport).addTo(map);
 
-// // Grabbing our GeoJSON data.
+// Grabbing our GeoJSON data.
 // L.geoJson(sanFranAirport, {
 //   // We turn each feature into a marker on the map.
 //   pointToLayer: function(feature, latlng) {
@@ -40,12 +40,13 @@ let sanFranAirport =
 // }).addTo(map);
 
 
-L.geoJson(sanFranAirport, {
-  onEachFeature: function(feature, layer) {
-    console.log(layer);
-    layer.bindPopup("<h2>" + feature.properties.name + " ("+feature.properties.faa+")</h2> <hr> <h3>" + feature.properties.city + ", " + feature.properties.country+"</h3>");
-   }
-}).addTo(map);
+// L.geoJson(sanFranAirport, {
+//   onEachFeature: function(feature, layer) {
+//     console.log(layer);
+//     layer.bindPopup("<h2>" + feature.properties.name + " ("+feature.properties.faa+")</h2> <hr> <h3>" + feature.properties.city + ", " + feature.properties.country+"</h3>");
+//    }
+// }).addTo(map);
+
 // //  Add a marker to the map for Los Angeles, California.
 // // [lat, lng]
 // let marker = L.marker([34.0522, -118.2437]).addTo(map);
@@ -92,7 +93,26 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 	accessToken: API_KEY
 });
 
+
 // Accessing the airport GeoJSON URL
-let airportData = "https://raw.githubusercontent.com/mauricio4337/Mapping_Earthquakes/master/majorAirports.json";
+let airportData = "https://raw.githubusercontent.com/mauricio4337/Mapping-Earthquakes/master/majorAirports.json";
 // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map);
+
+// Grabbing our GeoJSON data.
+d3.json(airportData).then(function(data) {
+  console.log(data);
+// Creating a GeoJSON layer with the retrieved data.
+L.geoJson(data).addTo(map);
+});
+
+
+d3.json(airportData).then(function(data) {
+
+L.geoJson(data, {
+  onEachFeature: function(feature, layer) {
+    console.log(feature);
+    layer.bindPopup("<h2>" + feature.properties.name + " ("+feature.properties.faa+")</h2> <hr> <h3>" + feature.properties.city + ", " + feature.properties.country+"</h3>");
+   }
+}).addTo(map);
+});
