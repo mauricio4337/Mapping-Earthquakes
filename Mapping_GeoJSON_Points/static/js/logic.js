@@ -3,7 +3,7 @@ console.log("working");
 
 // Create the map object with a center and zoom level.
 // setView --> Center:[lat,lng], zoomLevel
-let map = L.map('mapid').setView([37.5, -122.5], 10);
+let map = L.map('mapid').setView([30, 30], 2);
 
 // Add GeoJSON data.
 let sanFranAirport =
@@ -92,5 +92,7 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 	accessToken: API_KEY
 });
 
+// Accessing the airport GeoJSON URL
+let airportData = "https://raw.githubusercontent.com/mauricio4337/Mapping_Earthquakes/master/majorAirports.json";
 // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map);
